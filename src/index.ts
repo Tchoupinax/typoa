@@ -24,7 +24,7 @@ export type InternalFeatures = {
    * Enable this feature will throw if a property is not declared in the schema.
    * MIGHT BREAK YOUR API! Check before enabling it
    */
-  enableThrowOnUnexpectedAdditionalData: boolean;
+  enableThrowOnUnexpectedAdditionalData: boolean
 }
 
 export type OpenAPIConfiguration = {
@@ -129,7 +129,7 @@ export type OpenAPIConfiguration = {
      * Defaults to 'typoa'. Useful for tests to point to local source (e.g. '../../src').
      */
     runtimeImport?: string
-  },
+  }
   features?: InternalFeatures
 }
 
@@ -417,8 +417,9 @@ export async function generate(config: OpenAPIConfiguration) {
           self.findIndex(m => m.name === middleware.name) === index
       ),
     features: {
-      enableThrowOnUnexpectedAdditionalData: config.features?.enableThrowOnUnexpectedAdditionalData ?? false // Must be false by default because it was the original behaviour
-    },
+      enableThrowOnUnexpectedAdditionalData:
+        config.features?.enableThrowOnUnexpectedAdditionalData ?? false // Must be false by default because it was the original behaviour
+    }
   })
 
   await fs.promises.writeFile(routerFilePath, routerFileContent)

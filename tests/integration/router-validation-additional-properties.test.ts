@@ -34,10 +34,13 @@ const validBody = {
 }
 
 let app: express.Application
-const routerFile = path.resolve(__dirname, 'generated-router-validation-additional-properties.ts')
+const routerFile = path.resolve(
+  __dirname,
+  'generated-router-validation-additional-properties.ts'
+)
 const openapiFile = path.resolve(
   __dirname,
-    'generated-openapi-router-validation-additional-properties.json'
+  'generated-openapi-router-validation-additional-properties.json'
 )
 
 before(async () => {

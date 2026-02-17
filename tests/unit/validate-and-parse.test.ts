@@ -184,3 +184,34 @@ describe('when validating and parse params', () => {
     assert.equal(validatedData[3], 'proxy')
   })
 })
+
+describe('when unknown payload is accepted', () => {
+  test('it should not write the WARN log', async () => {
+    await validateAndParse(
+      {
+        params: {
+          id: '5f8d0d55b54764421b7156c3'
+        },
+        body: {
+          fe: 'fe'
+        },
+        query: {
+          mode: 'proxy'
+        },
+        headers: {
+          'content-type': 'application/json'
+        }
+      } as unknown as express.Request,
+      schemas as any,
+      {
+        // prettier-ignore
+        params: [{name:"request",in:"request"},{name:"id",in:"path",schema:{type:"string",description:"For /{id}/rlvt path we expect the datasource id, for path /{id}/workflow-events we expect the company id or the datasource id",pattern:"^[0-9a-fA-F]{24}$"},required:true},{name:"body",in:"body"},{name:"body",in:"body"}],
+        // prettier-ignore
+        body: {required:false,content:{"application/json":{schema:{oneOf:[{type:"object",properties:{},additionalProperties:{$ref:"#/components/schemas/AnyValue"}},{type:"array",items:{type:"object",properties:{},additionalProperties:{$ref:"#/components/schemas/AnyValue"}}}]}},"application/x-www-form-urlencoded":{schema:{type:"object",properties:{},additionalProperties:{$ref:"#/components/schemas/AnyValue"}}}}},
+        bodyDiscriminatorFn: undefined
+      }
+    )
+  })
+
+  assert.equal(true, true)
+})

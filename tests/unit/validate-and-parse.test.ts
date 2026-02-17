@@ -185,6 +185,7 @@ describe('when validating and parse params', () => {
   })
 })
 
+// I'm lazy to check automatically that the logger function has NOT been called but it is why the test has been designed
 describe('when unknown payload is accepted', () => {
   test('it should not write the WARN log', async () => {
     await validateAndParse(

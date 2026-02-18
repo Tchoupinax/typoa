@@ -186,10 +186,9 @@ describe('when validating and parse params', () => {
   })
 })
 
-
 describe('when unknown payload is accepted', () => {
   test('it should not write the WARN log', async t => {
-    t.mock.method(console, 'log');
+    t.mock.method(console, 'log')
 
     setRuntimeOptions({
       features: {},
@@ -198,7 +197,7 @@ describe('when unknown payload is accepted', () => {
         trace: console.log,
         debug: console.log,
         info: console.log,
-        warn: console.log,
+        warn: console.log
       }
     })
 
@@ -227,10 +226,12 @@ describe('when unknown payload is accepted', () => {
       }
     )
 
-    const logs: Array<string> = console.log.mock.calls.flatMap(call => call.arguments);
+    const logs: Array<string> = console.log.mock.calls.flatMap(
+      call => call.arguments
+    )
     assert.ok(
       !logs.some(msg => msg.includes('is not yet supported')),
       'Logs should not contain "is not yet supported"'
-    );
+    )
   })
 })

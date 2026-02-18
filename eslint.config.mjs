@@ -72,7 +72,10 @@ export default tseslint.config(
          Existing rule you had
          =========================== */
 
-      '@typescript-eslint/no-explicit-any': 'off'
+      '@typescript-eslint/no-explicit-any': 'off',
+
+      // Legacy
+      'prefer-spread': 'off'
     }
   }
 )

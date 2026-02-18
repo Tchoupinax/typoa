@@ -23,32 +23,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v5
-            - uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
 
             - name: install
-              run: bun install
+              run: yarn
 
             - name: build
-              run: bun run build
-
-            - name: bunfig.toml
-              shell: bash
-              run: |
-                  cat > "${GITHUB_WORKSPACE}/bunfig.toml" <<'EOF'
-                  [test]
-                  coveragePathIgnorePatterns = [
-                      "example/**",
-                      "build/**",
-                      "src/types.ts",
-                      "tests/**",
-                      "src/runtime/decorators.ts"
-                  ]
-                  EOF
+              run: yarn run build
 
             - name: test
-              run: bun run test
+              run: yarn run test
 
             - name: Coverage report
               if: github.event_name == 'pull_request'
@@ -61,12 +44,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
 
             - name: install
-              run: bun install
+              run: yarn
 
             - name: lint
-              run: bun run lint
+              run: yarn

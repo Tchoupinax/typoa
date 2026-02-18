@@ -13,7 +13,7 @@
     "prebuild": "rm -rf build",
     "build": "tsc --project ./tsconfig.build.json",
     "postbuild": "mkdir build/template/ && cp src/template/express.ts.hbs build/template/express.ts.hbs",
-    "test": "bun test --coverage --coverage-reporter=text --coverage-reporter=lcov",
+    "test": "node --import tsx --test tests/**/**.test.ts",
     "testbis": "nyc node --import tsx --experimental-test-coverage --test tests/**/**.test.ts",
     "test:coverage": "yarn testbis && nyc report --reporter=html && open coverage/index.html",
     "lint": "prettier --write . && eslint --fix ."

@@ -24,6 +24,12 @@ jobs:
         steps:
             - uses: actions/checkout@v5
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: '20'
+                  cache: 'yarn'
+
             - name: install
               run: yarn
 
@@ -31,14 +37,14 @@ jobs:
               run: yarn run build
 
             - name: test
-              run: yarn run test
+              run: yarn run test:ci
 
             - name: Coverage report
               if: github.event_name == 'pull_request'
               uses: xseman/coverage@v0.2.0
               with:
                   coverage-artifact-paths: |
-                      bun:coverage/lcov.info
+                      coverage/lcov.info
 
     lint:
         runs-on: ubuntu-latest

@@ -13,60 +13,49 @@ on:
             - tsconfig.json
             - .github/workflows/**.yml
 
+# Required for xseman/coverage to comment on PRs (uses Issues API)
 permissions:
     contents: read
     pull-requests: write
-    actions: write
+    issues: write
 
 jobs:
     test:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v5
-            - uses: oven-sh/setup-bun@v2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
               with:
-                  bun-version: latest
+                  node-version: '20'
+                  cache: 'yarn'
 
             - name: install
-              run: bun install
+              run: yarn
 
             - name: build
-              run: bun run build
-
-            - name: bunfig.toml
-              shell: bash
-              run: |
-                  cat > "${GITHUB_WORKSPACE}/bunfig.toml" <<'EOF'
-                  [test]
-                  coveragePathIgnorePatterns = [
-                      "example/**",
-                      "build/**",
-                      "src/types.ts",
-                      "tests/**",
-                      "src/runtime/decorators.ts"
-                  ]
-                  EOF
+              run: yarn run build
 
             - name: test
-              run: bun run test
+              run: yarn run test:ci
 
+            # Skip on fork PRs: GITHUB_TOKEN cannot comment on PRs from forks
             - name: Coverage report
-              if: github.event_name == 'pull_request'
+              if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
               uses: xseman/coverage@v0.2.0
               with:
-                  coverage-artifact-paths: |
-                      bun:coverage/lcov.info
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                coverage-artifact-paths: |
+                    lcov:coverage/lcov.info
 
     lint:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
 
             - name: install
-              run: bun install
+              run: yarn
 
             - name: lint
-              run: bun run lint
+              run: yarn

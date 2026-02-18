@@ -741,9 +741,13 @@ function validateAndParseValueAgainstSchema(
     }
     return { succeed: true, value: matchingValue }
   }
-  logger.warn(
-    `Schema of ${name} is not yet supported, skipping value validation`
-  )
+
+  if ('$ref' in schema && schema?.$ref !== '#/components/schemas/AnyValue') {
+    logger.warn(
+      `Schema of ${name} is not yet supported, skipping value validation`
+    )
+  }
+
   return { succeed: true, value }
 }
 

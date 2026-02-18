@@ -44,7 +44,7 @@ jobs:
               uses: xseman/coverage@v0.2.0
               with:
                   coverage-artifact-paths: |
-                      node:coverage/lcov.info
+                      lcov:coverage/lcov.info
 
     lint:
         runs-on: ubuntu-latest

@@ -13,10 +13,7 @@ on:
             - tsconfig.json
             - .github/workflows/**.yml
 
-permissions:
-    contents: read
-    pull-requests: write
-    actions: write
+permissions: write-all
 
 jobs:
     test:
@@ -43,9 +40,9 @@ jobs:
               if: github.event_name == 'pull_request'
               uses: xseman/coverage@v0.2.0
               with:
-                coverage-artifact-paths: |
-                    lcov:coverage/lcov.info
                 github-token: ${{ secrets.GITHUB_TOKEN }}
+                coverage-artifact-paths: |
+                  lcov:coverage/lcov.info
 
     lint:
         runs-on: ubuntu-latest
